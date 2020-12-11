@@ -12,6 +12,7 @@ class DependenciesGraphPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
 
+
         project.with {
             task("clean", type: Delete) {
                 delete "build"
@@ -40,9 +41,9 @@ class DependenciesGraphPlugin implements Plugin<Project> {
                             Configuration compileConfig = subProject.configurations["compile"]
 
                             compileConfig
-                                .dependencies
-                                .grep { it.respondsTo("getDependencyProject") && !isProjectExcluded(it) }
-                                .forEach { dotFile << """  "$subProject.name" -> "$it.dependencyProject.name"\n""" }
+                                    .dependencies
+                                    .grep { it.respondsTo("getDependencyProject") && !isProjectExcluded(it) }
+                                    .forEach { dotFile << """  "$subProject.name" -> "$it.dependencyProject.name"\n""" }
                         } catch (UnknownConfigurationException ignored) {
                         }
                     }
